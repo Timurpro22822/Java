@@ -13,7 +13,9 @@ public class Main {
         testArray();
         SortArray();
 
+        // Підключення до БД
         String connectionStr = "jdbc:mariadb://localhost:3306/java_spu013";
+        // Робимо через try, catch для того щоб в разі не підключення до бази, зловити exception
         try(Connection con = DriverManager.getConnection(connectionStr, "root", "")) {
             System.out.println("Successful Connection!");
             String query = "SELECT * FROM categories";
@@ -40,6 +42,8 @@ public class Main {
         //float, double, short, boolean, byte, char,
         //System.out.println("Привіт комнада a = "+ a);
     }
+
+    // Тестовий массив, заповняється рандомними числами та визначає кількість додатніх чисел
     public static void testArray()
     {
         Scanner input = new Scanner(System.in);
@@ -59,6 +63,7 @@ public class Main {
         System.out.println("Кількість додатніх чисел "+ count);
     }
 
+    // Сортований массив, юзаємо класс Person
     public static void SortArray()
     {
         Person[] list = {
@@ -72,7 +77,7 @@ public class Main {
 
         for (Person p : list)
             System.out.println(p);
-
+        // Сортуємо масив
         Arrays.sort(list /*, new Comparator<Person>() {
             @Override
             public int compare(Person o1, Person o2) {
@@ -84,6 +89,7 @@ public class Main {
         for (Person p : list)
             System.out.println(p);
     }
+    // Функція генерації рандомного числа
     public static int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
