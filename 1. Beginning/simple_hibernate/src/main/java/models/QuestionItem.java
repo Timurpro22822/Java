@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tbl_question_items")
 public class QuestionItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Primary key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment by key when adding new entry
     private int id;
 
     @Column(nullable = false, length = 500)
