@@ -1,8 +1,6 @@
 package utils;
 
-import models.Question;
-import models.QuestionItem;
-import models.Role;
+import models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -19,6 +17,11 @@ public class HiberContext {
             configuration.addAnnotatedClass(Role.class);
             configuration.addAnnotatedClass(Question.class);
             configuration.addAnnotatedClass(QuestionItem.class);
+            configuration.addAnnotatedClass(User.class);
+            configuration.addAnnotatedClass(UserRole.class);
+            configuration.addAnnotatedClass(Category.class);
+            configuration.addAnnotatedClass(Product.class);
+            configuration.addAnnotatedClass(ProductImage.class);
             // Реєструємо сорвіс на сонові нашого конфіга
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties());

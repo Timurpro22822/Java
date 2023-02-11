@@ -1,21 +1,67 @@
 package program;
 
 import enums.QuestionType;
-import models.Question;
-import models.QuestionItem;
-import models.Role;
+import models.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.HiberContext;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
+        //testRole();
+        //addUserAndRoles();
+        //addCategory("Laptop", "1.jpg");
+        addProduct();
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+
+        }
+
+    }
+
+    private static void addProduct() {
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+            Transaction tx = context.beginTransaction();
+            var cat = context.get(Category.class, 1);
+            Product p =
+                    new Product(new Date(), false, "Hammer", "Some hammer", cat);
+            context.save(p);
+            ProductImage pi = new ProductImage(new Date(), false, "1.jpg", 1, p);
+            ProductImage pi2 = new ProductImage(new Date(), false, "2.jpg", 1, p);
+            context.save(pi);
+            context.save(pi2);
+            tx.commit();
+        }
+    }
+    private static void addCategory(String name, String image) {
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+            Category category = new Category(name, image, new Date(), false);
+            context.save(category);
+        }
+    }
+    private static void addUserAndRoles() {
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+            Transaction tx = context.beginTransaction();
+            Role role = new Role();
+            role.setName("testRole.1");
+            context.save(role);
+            User user = new User("Ivan", "Truskavec", "ivan@gmail.com",
+                    "+380976543233", "098642");
+            context.save(user);
+            UserRole ur = new UserRole();
+            ur.setRole(role);
+            ur.setUser(user);
+            context.save(ur);
+            tx.commit();
+        }
+    }
+    private static void addQuestionItem() {
         try {
             // Додаємо запитання
             //addQuestion("When I'll be 16 y.o.", QuestionType.RADIO_BUTTON);
@@ -27,9 +73,6 @@ public class Main {
             // Якшо вилітає еррор:
             System.out.println("Some error: " + ex.getMessage());
         }
-
-//        testRole();
-
     }
 
     private static void addQuestionItem(int questionId, String text,
