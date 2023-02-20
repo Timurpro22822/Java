@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 @Table(name= "tbl_users")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Primary Key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment by key when adding new entry
     private int id;
     @Column(length = 100, nullable = false)
     private String firstName;

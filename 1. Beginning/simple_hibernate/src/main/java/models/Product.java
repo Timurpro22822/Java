@@ -11,8 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_products")
 public class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Primary Key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment by key when adding new entry
     protected int id;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateCreated;

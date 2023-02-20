@@ -10,8 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "tbl_categories")
 public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Primary Key
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto increment by key when adding new entry
     protected int id;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateCreated;

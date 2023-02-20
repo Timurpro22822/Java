@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "tbl_user_roles")
 @IdClass(UserRolePK.class)
 public class UserRole {
-    @Id
+    @Id // Primary Key
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;

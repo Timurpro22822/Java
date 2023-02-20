@@ -25,6 +25,7 @@ public class Main {
 
     }
 
+    // Добавлення продукта
     private static void addProduct() {
         try(Session context = HiberContext.getSessionFactory().openSession()) {
             Transaction tx = context.beginTransaction();
@@ -39,6 +40,7 @@ public class Main {
             tx.commit();
         }
     }
+    // Метод на добавлення категорії, в параметри передаємо ім'я та "зображення"
     private static void addCategory(String name, String image) {
         try(Session context = HiberContext.getSessionFactory().openSession()) {
             Category category = new Category(name, image, new Date(), false);
@@ -46,6 +48,7 @@ public class Main {
         }
     }
     private static void addUserAndRoles() {
+        // Робимо через try бо воно як начеб то має само закривато зв'язок з базою
         try(Session context = HiberContext.getSessionFactory().openSession()) {
             Transaction tx = context.beginTransaction();
             Role role = new Role();

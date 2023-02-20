@@ -9,8 +9,8 @@ import java.util.Date;
 @Entity
 @Table(name="tbl_product_images")
 public class ProductImage {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id // Primary Key
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// Auto increment by key when adding new entry
     protected int id;
     @Temporal(TemporalType.TIMESTAMP)
     protected Date dateCreated;
