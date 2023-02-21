@@ -22,6 +22,14 @@ public class HiberContext {
             configuration.addAnnotatedClass(Category.class);
             configuration.addAnnotatedClass(Product.class);
             configuration.addAnnotatedClass(ProductImage.class);
+            configuration.addAnnotatedClass(Orders.class);
+            configuration.addAnnotatedClass(OrderStatuses.class);
+            configuration.addAnnotatedClass(Baskets.class);
+            configuration.addAnnotatedClass(OrderItems.class);
+            configuration.addAnnotatedClass(FilterNames.class);
+            configuration.addAnnotatedClass(FilterValues.class);
+            configuration.addAnnotatedClass(FilterNameGroups.class);
+            configuration.addAnnotatedClass(Filters.class);
             // Реєструємо сорвіс на сонові нашого конфіга
             StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties());

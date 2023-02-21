@@ -18,13 +18,38 @@ public class Main {
         //testRole();
         //addUserAndRoles();
         //addCategory("Laptop", "1.jpg");
-        addProduct();
+        //addProduct();
+        // ------
+        // добавлення тестових данних щоб перевірити чи працюють зв'язки
+        //addOrder();
+        //addOrderStatuses();
+
         try(Session context = HiberContext.getSessionFactory().openSession()) {
 
         }
 
     }
-
+    // добавлення тестових данних щоб перевірити чи працюють зв'язки
+    private static void addOrderStatuses() {
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+            Transaction tx = context.beginTransaction();
+            OrderStatuses oS =
+                    new OrderStatuses(false, new Date(), "Delivered");
+            context.save(oS);
+            tx.commit();
+        }
+    }
+    private static void addOrder() {
+        try(Session context = HiberContext.getSessionFactory().openSession()) {
+            Transaction tx = context.beginTransaction();
+            var cat = context.get(OrderStatuses.class, 1);
+            var cat2 = context.get(User.class, 1);
+            Orders o =
+                    new Orders(new Date(), false, cat, cat2);
+            context.save(o);
+            tx.commit();
+        }
+    }
     // Добавлення продукта
     private static void addProduct() {
         try(Session context = HiberContext.getSessionFactory().openSession()) {
