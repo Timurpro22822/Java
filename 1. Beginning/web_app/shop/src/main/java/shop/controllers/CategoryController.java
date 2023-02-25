@@ -28,11 +28,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryEntity> create(@RequestBody CategoryCreateDTO model) {
+    public ResponseEntity<CategoryItemDTO> create(@RequestBody CategoryCreateDTO model) {
         var fileName = storageService.save(model.getBase64());
         CategoryEntity category = categoryMapper.CategoryByCreateDTO(model);
         category.setImage(fileName);
         categoryRepository.save(category);
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+        var result = categoryMapper.CategoryItemByCategory(category)
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
