@@ -33,7 +33,7 @@ public class CategoryController {
         CategoryEntity category = categoryMapper.CategoryByCreateDTO(model);
         category.setImage(fileName);
         categoryRepository.save(category);
-        var result = categoryMapper.CategoryItemByCategory(category)
+        var result = categoryMapper.CategoryItemByCategory(category);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
