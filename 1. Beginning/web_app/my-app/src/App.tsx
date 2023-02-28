@@ -9,6 +9,7 @@ import Team from './components/home/Team';
 import NotFound from './components/home/NotFound';
 import About from './components/home/About';
 import Content from './components/home/Content';
+import CategoryPage from './components/home/CategoryPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/team" element={<Team />}/>
         <Route path="/content" element={<Content />}/>
         <Route path="/about" element={<About />}/>
+        <Route path="/category" element={<CategoryPage />}/>
         <Route path="*" element={<NotFound />}/>
       </Routes>
     </main>
