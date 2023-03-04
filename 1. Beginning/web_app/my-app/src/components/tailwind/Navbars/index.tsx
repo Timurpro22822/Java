@@ -5,10 +5,12 @@ import { Link, Routes } from 'react-router-dom'
 
 
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
-  { name: 'Team', href: '/team', current: false },
-  { name: 'Content', href: '/content', current: false },
-  { name: 'About Us', href: '/about', current: false },
+  { name: 'Dashboard', to: '/', current: true },
+  { name: 'Team', to: '/team', current: false },
+  { name: 'Content', to: '/content', current: false },
+  { name: 'About Us', to: '/about', current: false },
+  { name: 'Categories', to: '/category', current: false },
+  { name: 'Create category', to: '/category/create', current: false },
 ]
 
 function classNames(...classes : any) {
@@ -51,7 +53,7 @@ const Navbar = () => {
                     {navigation.map((item) => (
                       <Link
                         key={item.name}
-                        to={item.href}
+                        to={item.to}
                         className={classNames(
                           item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                           'px-3 py-2 rounded-md text-sm font-medium'
@@ -138,7 +140,7 @@ const Navbar = () => {
                 <Disclosure.Button
                   key={item.name}
                   as="a"
-                  href={item.href}
+                  href={item.to}
                   className={classNames(
                     item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
