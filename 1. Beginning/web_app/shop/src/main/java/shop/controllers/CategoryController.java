@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import shop.DTO.category.CategoryCreateDTO;
 import shop.DTO.category.CategoryItemDTO;
 import shop.entities.CategoryEntity;
+import shop.exception.NotFoundException;
 import shop.mapper.CategoryMapper;
 import shop.repositories.CategoryRepository;
 import shop.storage.StorageService;
@@ -38,8 +39,21 @@ public class CategoryController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    //@PutMapping
+    @PutMapping("{id}")
+    public ResponseEntity<CategoryEntity> update(@PathVariable Integer id, @RequestBody CategoryEntity categoryEntityDetails) {
+        CategoryEntity updateCategoryEntity = categoryRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Category not exist with id: " + id));
+        updateCategoryEntity.setName(categoryEntityDetails.getName());
+        updateCategoryEntity.setDescription(categoryEntityDetails.getDescription());
+        updateCategoryEntity.setImage(categoryEntityDetails.getImage());
 
-    //@DeleteMapping
-    //public ResponseEntity<>
+        categoryRepository.save(updateCategoryEntity);
+
+        return ResponseEntity.ok(updateCategoryEntity);
+    }
+
+    @DeleteMapping
+    public void delete(@RequestParam(value = "id") Integer id) {
+        categoryRepository.deleteById(id);
+    }
 }
