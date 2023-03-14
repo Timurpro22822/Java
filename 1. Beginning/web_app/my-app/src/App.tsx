@@ -20,6 +20,7 @@ function App() {
     {/* <Pagination/> */}
     {/* <h1 className="text-3xl font-bold underline">Hello world!</h1> */}
     <main>
+      {/* Маршрутизація */}
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/team" element={<Team />}/>

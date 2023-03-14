@@ -4,7 +4,6 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux/es/exports";
 import { Link } from "react-router-dom";
 import { APP_ENV } from "../../env";
-import http from "../../http_common";
 import { CategoryActionTypes, GetCategoryAction, ICategoryItem, ICategoryResponse, ICategoryState } from "../../types";
 
 const CategoryPage = () => {

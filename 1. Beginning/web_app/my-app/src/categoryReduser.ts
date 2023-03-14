@@ -10,6 +10,7 @@ const initialState : Array<ICategoryItem> = [
     // }
 ];
 
+// Простий редюсер
 export const categoryReducer = (state = initialState, action: any) => {
     console.log("Action: ", action);
     switch(action.type)
