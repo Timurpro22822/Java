@@ -7,10 +7,12 @@ import { Link, Routes } from 'react-router-dom'
 const navigation = [
   { name: 'Dashboard', to: '/', current: true },
   { name: 'Team', to: '/team', current: false },
+  { name: 'Products', to: '/products/list', current: false },
   { name: 'Content', to: '/content', current: false },
   { name: 'About Us', to: '/about', current: false },
   { name: 'Categories', to: '/category', current: false },
   { name: 'Create category', to: '/category/create', current: false },
+  { name: 'Create product', to: '/products/create', current: false },
 ]
 
 function classNames(...classes : any) {
