@@ -8,7 +8,7 @@ import shop.entities.ProductEntity;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-03-11T13:03:59+0200",
+    date = "2023-03-18T09:58:07+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 19.0.2 (Oracle Corporation)"
 )
 @Component
@@ -23,6 +23,7 @@ public class ProductMapperImpl implements ProductMapper {
         ProductItemDTO productItemDTO = new ProductItemDTO();
 
         productItemDTO.setCategory( productCategoryName( product ) );
+        productItemDTO.setCategory_id( productCategoryId( product ) );
         productItemDTO.setId( product.getId() );
         productItemDTO.setName( product.getName() );
         productItemDTO.setPrice( product.getPrice() );
@@ -44,5 +45,17 @@ public class ProductMapperImpl implements ProductMapper {
             return null;
         }
         return name;
+    }
+
+    private int productCategoryId(ProductEntity productEntity) {
+        if ( productEntity == null ) {
+            return 0;
+        }
+        CategoryEntity category = productEntity.getCategory();
+        if ( category == null ) {
+            return 0;
+        }
+        int id = category.getId();
+        return id;
     }
 }

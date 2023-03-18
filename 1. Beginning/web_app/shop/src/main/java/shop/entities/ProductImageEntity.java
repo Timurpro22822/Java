@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -22,7 +24,10 @@ public class ProductImageEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
     private boolean isDelete;
-    @ManyToOne
+    //    @ManyToOne
+//    @JoinColumn(name = "product_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private ProductEntity product;
 }
