@@ -1,22 +1,25 @@
 import axios from "axios";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { APP_ENV } from "../../../env";
 import { ICategoryItem } from "../../../types";
-import { IProductCreate } from "../types";
+import { IProductEdit, IProductItem } from "../types";
 import { FaTimes } from "react-icons/fa";
 
-const ProductCreatePage = () => {
+const ProductEditPage = () => {
 
     const [categories, setCategories] = useState<Array<ICategoryItem>>([]);
 
-    const [model, setModel] = useState<IProductCreate>({
+    const [model, setModel] = useState<IProductEdit>({
         name: "",
         price: 0,
-        category_id: 0,
+        category_id: "",
         description: "",
         files: [],
+        removeFiles: []
     });
+
+    const [oldImages, setOldImages] = useState<string[]>([]);
 
     const onChangeHandler = (
         e:
@@ -36,6 +39,8 @@ const ProductCreatePage = () => {
         e.target.value = "";
     }
 
+const {id} = useParams();
+
     useEffect(() => {
         axios.get<Array<ICategoryItem>>(`${APP_ENV.REMOTE_HOST_NAME}api/categories`)
             .then(resp => {
@@ -43,7 +48,13 @@ const ProductCreatePage = () => {
                 setCategories(resp.data);
             });
 
-    }, [])
+            axios.get<IProductItem>(`${APP_ENV.REMOTE_HOST_NAME}api/products/${id}`)
+                .then(resp => {
+                    const {files, category_id, description, price, name} = resp.data;
+                    setOldImages(files);
+                    setModel({...model, name, price, category_id, description});
+                });
+        }, [])
 
     const contentCategories = categories.map(c => (
         <option key={c.id} value={c.id}>
@@ -83,13 +94,47 @@ const ProductCreatePage = () => {
         );
       });
 
+      const contentOldImages = oldImages.map((img, index) => {
+        return (
+          <div key={index} className="mb-4 imageView">
+            <div className="hideSection">
+              <Link
+                className="text-sm"
+                to="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setModel({
+                    ...model,
+                    removeFiles: [...model.removeFiles, img] 
+                })
+                  setOldImages(oldImages.filter((x) => x !== img));
+                }}
+              >
+                <FaTimes className="m-2 text-3xl text-red-500" />
+              </Link>
+            </div>
+    
+            <div className="relative">
+              <div style={{ height: "150px" }}>
+                <div className="main-slider">
+                  <img
+                    src={`${APP_ENV.REMOTE_HOST_NAME}files/600_${img}`}
+                    className="picture-container"
+                    alt=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      });
       const navigator = useNavigate();
 
       const onSubmitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-          const item = await axios.post(
-            `${APP_ENV.REMOTE_HOST_NAME}api/products`,
+          const item = await axios.put(
+            `${APP_ENV.REMOTE_HOST_NAME}api/products/${id}`,
             model,
             {
               headers: {
@@ -97,7 +142,7 @@ const ProductCreatePage = () => {
               },
             }
           );
-          navigator("/");
+          navigator("/products/list");
         } catch (error: any) {
           console.log("Щось пішло не так", error);
         }
@@ -105,7 +150,7 @@ const ProductCreatePage = () => {
 
     return (
         <div className="p-8 rounded border border-gray-200">
-            <h1 className="font-medium text-3xl">Додати продукт</h1>
+            <h1 className="font-medium text-3xl">Змінити продукт</h1>
             <form onSubmit={onSubmitHandler}>
                 <div className="mt-8 grid lg:grid-cols-1 gap-4">
                     <div>
@@ -118,6 +163,7 @@ const ProductCreatePage = () => {
                         <input
                             type="text"
                             name="name"
+                            value={model.name}
                             id="name"
                             onChange={onChangeHandler}
                             className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
@@ -135,6 +181,7 @@ const ProductCreatePage = () => {
                         <input
                             type="text"
                             name="price"
+                            value={model.price}
                             id="price"
                             onChange={onChangeHandler}
                             className="bg-gray-100 border border-gray-200 rounded py-1 px-3 block focus:ring-blue-500 focus:border-blue-500 text-gray-700 w-full"
@@ -152,6 +199,7 @@ const ProductCreatePage = () => {
                         <select
                             id="category_id"
                             name="category_id"
+                            value={model.category_id}
                             onChange={onChangeHandler}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         >
@@ -170,6 +218,7 @@ const ProductCreatePage = () => {
                         <textarea
                             id="description"
                             name="description"
+                            value={model.description}
                             onChange={onChangeHandler}
                             rows={4}
                             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -177,7 +226,7 @@ const ProductCreatePage = () => {
                         ></textarea>
                     </div>
                     <div className="grid grid-cols-12 items-center gap-4">
-
+                        {contentOldImages}
                         {contentFiles}
 
                     </div>
@@ -228,7 +277,7 @@ const ProductCreatePage = () => {
                         type="submit"
                         className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50"
                     >
-                        Додати
+                        Зберегти
                     </button>
                     <Link to="/" className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50">
                         Скасувати
@@ -238,4 +287,4 @@ const ProductCreatePage = () => {
         </div>
     )
 }
-export default ProductCreatePage;
+export default ProductEditPage;

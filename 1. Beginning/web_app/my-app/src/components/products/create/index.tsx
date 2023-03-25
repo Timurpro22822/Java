@@ -1,3 +1,3 @@
-import ProductCratePage from "./ProductCreatePage";
+import ProductCreatePage from "./ProductCreatePage";
 
-export default ProductCratePage;
+export default ProductCreatePage;

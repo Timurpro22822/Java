@@ -14,6 +14,7 @@ import CategoryPage from './components/home/CategoryPage';
 import CategoryCreatePage from './components/home/categories/create';
 import ProductsListPage from './components/products/list';
 import ProductCreatePage from './components/products/create/ProductCreatePage';
+import ProductEditPage from './components/products/edit';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/category" element={<CategoryPage />}/>
         <Route path="/category/create" element={<CategoryCreatePage />}/>
         <Route path="/products/create" element={<ProductCreatePage />}/>
+        <Route path="/products/edit/:id" element={<ProductEditPage />}/>
         <Route path="*" element={<NotFound />}/>
       </Routes>
     </main>
